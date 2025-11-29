@@ -1,0 +1,7 @@
+[
+  { "id": "tn01", "name": "Trento - Centro", "climateFactor": 1.0 },
+  { "id": "tn02", "name": "Trento - Collina", "climateFactor": 1.05 },
+  { "id": "bo01", "name": "Bolzano - Centro", "climateFactor": 0.95 },
+  { "id": "rm01", "name": "Roma - Centro", "climateFactor": 0.9 },
+  { "id": "mi01", "name": "Milano - Centro", "climateFactor": 1.02 }
+]
