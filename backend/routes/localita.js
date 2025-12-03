@@ -3,16 +3,11 @@ const router = express.Router();
 
 // Località fisse (esempio: principali città italiane)
 const localita = [
-  "Milano",
-  "Roma",
-  "Torino",
-  "Napoli",
-  "Bologna",
-  "Firenze",
-  "Venezia",
-  "Palermo",
-  "Genova",
-  "Verona"
+  "Trento Nord",
+  "Trento Centro",
+  "Trento Sud",
+  "Povo collina",
+  "Mesiano"
 ];
 
 // GET /api/localita
