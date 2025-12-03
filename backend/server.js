@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const { connectDB } = require('./config/db');
@@ -12,7 +11,6 @@ app.use(cors({
   origin: ['http://localhost:5173', 'http://172.30.133.154:5173']
 }));
 
-// Abilita parsing JSON
 app.use(express.json());
 
 // Connect DB
@@ -21,11 +19,20 @@ connectDB(uri)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error', err));
 
-// Routes
+// Endpoint temporaneo di test POST /api/simulation
+app.post('/api/simulation', (req, res) => {
+  console.log('Richiesta ricevuta:', req.body);
+  res.json({
+    message: 'Simulazione ricevuta!',
+    data: req.body
+  });
+});
+
+// Rotte esistenti
 app.use('/api', simulationRoutes);
 app.use('/api/localita', require('./routes/localita'));
 
-// Root di test
+// Root
 app.get('/', (req, res) => res.json({ message: 'RF4 Simulation Backend' }));
 
 const PORT = process.env.PORT || 4000;
