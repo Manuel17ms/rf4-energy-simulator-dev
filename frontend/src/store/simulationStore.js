@@ -1,51 +1,63 @@
 import { defineStore } from 'pinia';
-import { postSimulation, getLocations } from '../api/simulation';
+import axios from '../axios.js'; // Assicurati che axios sia configurato correttamente
 
 export const useSimulationStore = defineStore('simulation', {
   state: () => ({
     form: {
-      squareMeters: 80,
+      squareMeters: null,
       housingType: 'apartment',
       residents: 1,
-      energy: { water: 'electricity', heating: 'gas', cooking: 'electricity' },
+      energy: {
+        water: 'gas',
+        heating: 'gas',
+        cooking: 'gas'
+      },
       locationId: ''
     },
-    locations: [],
     result: null,
     loading: false,
-    error: null
+    error: null,
+    locations: [] // eventuali località pre-caricate
   }),
+
   actions: {
-    async loadLocations() {
+    async submitSimulation() {
+      console.log("submitSimulation chiamato con dati:", this.form);
+
       this.loading = true;
+      this.error = null;
+      this.result = null;
+
       try {
-        this.locations = await getLocations();
+        const response = await axios.post('/api/simulate', this.form);
+        console.log("Risposta backend:", response.data);
+
+        if (response.data) {
+          this.result = response.data;
+          console.log("Store.result aggiornato:", this.result);
+        } else {
+          console.warn("Backend non ha restituito dati validi");
+          this.error = "Backend non ha restituito dati validi";
+        }
+
       } catch (err) {
-        this.error = err.message || 'Errore caricamento locations';
+        console.error("Errore durante submitSimulation:", err);
+        this.error = "Errore durante il calcolo";
       } finally {
         this.loading = false;
+        console.log("submitSimulation terminata. Loading:", this.loading, "Error:", this.error);
       }
     },
-   async submitSimulation() {
-  this.loading = true;
-  this.error = null;
 
-  try {
-    const res = await postSimulation(this.form);
-
-    console.log('✅ RISPOSTA API:', res);
-
-    this.result = res.data;   // ✅ GIUSTO
-
-  } catch (err) {
-    console.error('❌ ERRORE API:', err);
-    this.error = err.message || 'Errore chiamata API';
-  } finally {
-    this.loading = false;
-  }
-}
+    // Facoltativo: caricamento località
+    async loadLocations() {
+      try {
+        const response = await axios.get('/api/locations');
+        this.locations = response.data;
+        console.log("Locations caricate:", this.locations);
+      } catch (err) {
+        console.error("Errore caricamento locations:", err);
+      }
+    }
   }
 });
-
-
-
