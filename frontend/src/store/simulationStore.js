@@ -36,7 +36,7 @@ export const useSimulationStore = defineStore('simulation', {
     console.log('RISPOSTA API:', res); // ✅ controlla nel browser
 
     // ✅ SALVIAMO SOLO I DATI UTILI
-    this.result = res.data;
+    this.result = res.data.data;
 
   } catch (err) {
     this.error = err.message || 'Errore chiamata API';
@@ -46,4 +46,5 @@ export const useSimulationStore = defineStore('simulation', {
 }
   }
 });
+
 
