@@ -26,17 +26,24 @@ export const useSimulationStore = defineStore('simulation', {
         this.loading = false;
       }
     },
-    async submitSimulation() {
-      this.loading = true;
-      this.error = null;
-      try {
-        const data = await postSimulation(this.form);
-        this.result = data;
-      } catch (err) {
-        this.error = err.message || 'Errore chiamata API';
-      } finally {
-        this.loading = false;
-      }
-    }
+   async submitSimulation() {
+  this.loading = true;
+  this.error = null;
+
+  try {
+    const res = await postSimulation(this.form);
+
+    console.log('RISPOSTA API:', res); // ✅ controlla nel browser
+
+    // ✅ SALVIAMO SOLO I DATI UTILI
+    this.result = res.data;
+
+  } catch (err) {
+    this.error = err.message || 'Errore chiamata API';
+  } finally {
+    this.loading = false;
+  }
+}
   }
 });
+
