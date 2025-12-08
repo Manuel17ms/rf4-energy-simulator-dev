@@ -7,18 +7,14 @@ export const useSimulationStore = defineStore('simulation', {
       squareMeters: 80,
       housingType: 'apartment',
       residents: 1,
-      energy: {
-        water: 'electricity',
-        heating: 'gas',
-        cooking: 'electricity'
-      },
+      energy: { water: 'electricity', heating: 'gas', cooking: 'electricity' },
       locationId: ''
     },
 
     locations: [],
     result: null,
-    history: [],          
-    compareResult: null,  
+
+    compareResult: null, // ✅ QUESTO SERVE PER MOSTRARLO
 
     loading: false,
     error: null
@@ -30,7 +26,7 @@ export const useSimulationStore = defineStore('simulation', {
       try {
         this.locations = await getLocations();
       } catch (err) {
-        this.error = err.message || 'Errore caricamento locations';
+        this.error = err.message || 'Errore caricamento località';
       } finally {
         this.loading = false;
       }
@@ -45,14 +41,7 @@ export const useSimulationStore = defineStore('simulation', {
 
         console.log('RISPOSTA API:', res);
 
-       
-        this.result = res.data;
-
-       
-        this.history.push({
-          ...res.data,
-          date: new Date().toLocaleString()
-        });
+        this.result = res.data; // ✅ QUI ERA IL PROBLEMA PRIMA
 
       } catch (err) {
         this.error = err.message || 'Errore chiamata API';
@@ -61,29 +50,17 @@ export const useSimulationStore = defineStore('simulation', {
       }
     },
 
-    async loadCompare(locationId) {
-      try {
-        this.compareResult = await getCompare(locationId);
-      } catch (err) {
-        this.error = err.message || 'Errore confronto';
-      }
-    },
     async compareLocation(locationId) {
-  this.loading = true;
-  this.error = null;
+      try {
+        const res = await getCompare(locationId);
 
-  try {
-    const res = await getCompare(locationId);
-    console.log('CONFRONTO API:', res);
+        console.log('CONFRONTO API:', res);
 
-    this.compareResult = res;
-  } catch (err) {
-    this.error = err.message || 'Errore confronto località';
-  } finally {
-    this.loading = false;
-  }
-}
-
+        this.compareResult = res; // ✅ QUI LO SALVIAMO
+      } catch (err) {
+        this.error = err.message || 'Errore confronto località';
+      }
+    }
   }
 });
 
