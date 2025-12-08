@@ -1,44 +1,32 @@
 <template>
-  <div>
-    <h3>Confronto con altra località</h3>
+  <div style="margin-top:2rem; border-top:1px solid #ccc; padding-top:1rem;">
+    <h3>Confronto con la località</h3>
 
-    <select v-model="selected">
-      <option disabled value="">Seleziona località</option>
-      <option v-for="loc in locations" :key="loc.id" :value="loc.id">
-        {{ loc.name }}
-      </option>
-    </select>
+    <button @click="compare" :disabled="!store.form.locationId">
+      Confronta con questa località
+    </button>
 
-    <button @click="compare">Confronta</button>
-
-    <div v-if="compareResult">
-      <p><strong>Consumo stimato:</strong> {{ compareResult.estimatedConsumptionKWh }} kWh</p>
-      <p><strong>CO2 stimata:</strong> {{ compareResult.co2EquivalentKg }} kg</p>
+    <div v-if="store.compareResult" style="margin-top:1rem;">
+      <p><strong>Consumo medio:</strong> {{ store.compareResult.estimatedConsumptionKWh }} kWh</p>
+      <p><strong>CO₂ medio:</strong> {{ store.compareResult.co2EquivalentKg }} kg</p>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
 import { useSimulationStore } from '../store/simulationStore';
 
 export default {
+  name: 'LocationCompare',
   setup() {
     const store = useSimulationStore();
-    const selected = ref('');
 
     function compare() {
-      if (selected.value) {
-        store.compareLocation(selected.value);
-      }
+      store.compareLocation(store.form.locationId);
     }
 
-    return {
-      selected,
-      compare,
-      locations: store.locations,
-      compareResult: store.compareResult
-    };
+    return { store, compare };
   }
 };
 </script>
+
