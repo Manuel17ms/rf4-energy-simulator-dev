@@ -1,7 +1,7 @@
+
 const express = require('express');
 const router = express.Router();
 
-// Località fisse (esempio: principali città italiane)
 const localita = [
   { id: 'loc1', name: 'Piedicastello', climateFactor: 1.2 },
   { id: 'loc2', name: 'Madonna Bianca', climateFactor: 1.1 },
@@ -13,16 +13,10 @@ const localita = [
   { id: 'loc8', name: 'San Giuseppe', climateFactor: 1.0 }
 ];
 
-// GET /api/localita
-router.get('/locations', (req, res) => {
-  const formatted = localita.map((name, index) => ({
-    id: `tn0${index + 1}`,
-    name,
-    climateFactor: 1
-  }));
-
-  res.json(formatted);
+// Risponde sia a /locations sia a /localita — utile se il router viene montato su /api
+router.get(['/locations', '/localita', '/'], (req, res) => {
+  // se vuoi puoi mappare o normalizzare i campi qui; ora restituiamo già oggetti corretti
+  res.json(localita);
 });
-
 
 module.exports = router;
