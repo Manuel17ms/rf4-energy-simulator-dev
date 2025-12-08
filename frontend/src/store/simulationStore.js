@@ -67,7 +67,7 @@ export const useSimulationStore = defineStore('simulation', {
       } catch (err) {
         this.error = err.message || 'Errore confronto';
       }
-    }
+    },
     async compareLocation(locationId) {
   this.loading = true;
   this.error = null;
@@ -86,6 +86,7 @@ export const useSimulationStore = defineStore('simulation', {
 
   }
 });
+
 
 
 
