@@ -14,8 +14,15 @@ const localita = [
 ];
 
 // GET /api/localita
-router.get('/', (req, res) => {
-  res.json(localita);
+router.get('/locations', (req, res) => {
+  const formatted = localita.map((name, index) => ({
+    id: `tn0${index + 1}`,
+    name,
+    climateFactor: 1
+  }));
+
+  res.json(formatted);
 });
+
 
 module.exports = router;
