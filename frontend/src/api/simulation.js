@@ -16,8 +16,8 @@ export function getLocations() {
 }
 
 // ✅ CONFRONTO
-export function compareLocationApi(locationId) {
-  return API.get(`/simulation/compare/${locationId}`);
+export function getCompare(locationId) {
+  return API.get(`/simulation/compare/${locationId}`).then(res => res.data);
 }
 
 
