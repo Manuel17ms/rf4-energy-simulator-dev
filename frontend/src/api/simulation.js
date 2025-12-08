@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000';
+const API = axios.create({
+  baseURL: 'http://172.30.133.154:4000/api', // <- IP reale della macchina
+  headers: { 'Content-Type': 'application/json' }
+});
 
 // ✅ INVIO SIMULAZIONE
 export async function postSimulation(data) {
@@ -17,6 +20,7 @@ export async function getLocations() {
 export async function compareLocationApi(locationId) {
   return axios.get(`${API_URL}/simulation/compare/${locationId}`);
 }
+
 
 
 
