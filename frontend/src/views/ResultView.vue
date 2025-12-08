@@ -1,45 +1,29 @@
 <template>
-  <div style="padding:1rem; max-width:700px; margin:auto;">
-    
-    <button @click="goBack" style="margin-bottom:1rem;">
-      ← Nuova simulazione
-    </button>
+  <div>
+    <button @click="goBack" style="margin-bottom:1rem;">← Nuova simulazione</button>
 
-    <!-- ✅ RISULTATO PRINCIPALE -->
-    <SimulationResult v-if="store.result" :data="store.result" />
+    <div v-if="store.result">
+      <h2>Risultato Simulazione</h2>
 
-    <!-- ❌ SE NON C'è RISULTATO -->
-    <div v-else style="margin-top:1rem;">
-      <p>Nessun risultato — esegui prima una simulazione.</p>
-      <button @click="goBack">Vai al form</button>
+      <p><strong>Consumo:</strong> {{ store.result.estimatedConsumptionKWh }} kWh</p>
+      <p><strong>CO₂:</strong> {{ store.result.co2EquivalentKg }} kg</p>
+
+      <LocationCompare />
     </div>
 
-    <hr style="margin:2rem 0;" />
-
-    <!-- ✅ STORICO -->
-    <SimulationHistory />
-
-    <hr style="margin:2rem 0;" />
-
-    <!-- ✅ CONFRONTO LOCALITÀ -->
-    <LocationCompare />
-
+    <div v-else>
+      <p>Nessun risultato — esegui prima una simulazione.</p>
+    </div>
   </div>
 </template>
 
 <script>
-import SimulationResult from '../components/SimulationResult.vue';
-import SimulationHistory from '../components/SimulationHistory.vue';
-import LocationCompare from '../components/LocationCompare.vue';
 import { useSimulationStore } from '../store/simulationStore';
+import LocationCompare from '../components/LocationCompare.vue';
 
 export default {
-  name: 'ResultView',
-  components: {
-    SimulationResult,
-    SimulationHistory,
-    LocationCompare
-  },
+  components: { LocationCompare },
+
   setup() {
     const store = useSimulationStore();
 
@@ -51,3 +35,4 @@ export default {
   }
 };
 </script>
+
