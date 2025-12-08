@@ -68,8 +68,25 @@ export const useSimulationStore = defineStore('simulation', {
         this.error = err.message || 'Errore confronto';
       }
     }
+    async compareLocation(locationId) {
+  this.loading = true;
+  this.error = null;
+
+  try {
+    const res = await getCompare(locationId);
+    console.log('CONFRONTO API:', res);
+
+    this.compareResult = res;
+  } catch (err) {
+    this.error = err.message || 'Errore confronto località';
+  } finally {
+    this.loading = false;
+  }
+}
+
   }
 });
+
 
 
 
