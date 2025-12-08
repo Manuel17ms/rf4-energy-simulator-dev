@@ -1,27 +1,32 @@
 import { defineStore } from 'pinia';
-import { postSimulation, getLocations, getCompare } from '../api/simulation';
+import { postSimulation, getLocations, compareLocationApi } from '../api/simulation';
 
 export const useSimulationStore = defineStore('simulation', {
- state: () => ({
-  form: {
-    squareMeters: 80,
-    housingType: 'apartment',
-    residents: 1,
-    energy: { water: 'electricity', heating: 'gas', cooking: 'electricity' },
-    locationId: ''
-  },
+  state: () => ({
+    form: {
+      squareMeters: 80,
+      housingType: 'apartment',
+      residents: 1,
+      energy: {
+        water: 'electricity',
+        heating: 'gas',
+        cooking: 'electricity'
+      },
+      locationId: ''
+    },
 
-  locations: [],
+    locations: [],
+    result: null,
 
-  result: null,
-  compareResult: null,
+    // ✅ STORICO VERO
+    history: [],
 
-  history: [], // ✅ STORICO RIPRISTINATO
+    // ✅ CONFRONTO
+    compareResult: null,
 
-  loading: false,
-  error: null
-}),
-
+    loading: false,
+    error: null
+  }),
 
   actions: {
     async loadLocations() {
@@ -29,58 +34,44 @@ export const useSimulationStore = defineStore('simulation', {
       try {
         this.locations = await getLocations();
       } catch (err) {
-        this.error = err.message || 'Errore caricamento località';
+        this.error = err.message || 'Errore caricamento locations';
       } finally {
         this.loading = false;
       }
     },
 
-   async submitSimulation() {
-  this.loading = true;
-  this.error = null;
+    async submitSimulation() {
+      this.loading = true;
+      this.error = null;
 
-  try {
-    const res = await postSimulation(this.form);
+      try {
+        const res = await postSimulation(this.form);
 
-    console.log('RISPOSTA API:', res);
+        // ✅ RISULTATO ATTUALE
+        this.result = res.data.data;
 
-    this.result = res.data;
+        // ✅ SALVATAGGIO NELLO STORICO
+        this.history.unshift({
+          date: new Date().toLocaleString(),
+          consumption: this.result.estimatedConsumptionKWh,
+          co2: this.result.co2EquivalentKg
+        });
 
-    // ✅ SALVIAMO NELLO STORICO
-    this.history.unshift({
-      id: Date.now(),
-      date: new Date().toLocaleString(),
-      input: { ...this.form },
-      output: res.data
-    });
+      } catch (err) {
+        this.error = err.message || 'Errore chiamata API';
+      } finally {
+        this.loading = false;
+      }
+    },
 
-  } catch (err) {
-    this.error = err.message || 'Errore chiamata API';
-  } finally {
-    this.loading = false;
-  }
-},
-
-
+    // ✅ CONFRONTO TRA LOCALITÀ
     async compareLocation(locationId) {
       try {
-        const res = await getCompare(locationId);
-
-        console.log('CONFRONTO API:', res);
-
-        this.compareResult = res; // ✅ QUI LO SALVIAMO
+        const res = await compareLocationApi(locationId);
+        this.compareResult = res.data.data;
       } catch (err) {
-        this.error = err.message || 'Errore confronto località';
+        console.error('Errore confronto:', err);
       }
     }
   }
 });
-
-
-
-
-
-
-
-
-
