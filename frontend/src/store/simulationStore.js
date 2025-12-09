@@ -94,7 +94,8 @@ export const useSimulationStore = defineStore('simulation', {
     }
   }
 }
-}
+})
+
 
 
 
