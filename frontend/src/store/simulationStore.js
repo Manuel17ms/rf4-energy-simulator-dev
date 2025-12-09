@@ -70,7 +70,7 @@ export const useSimulationStore = defineStore('simulation', {
   } finally {
     this.loading = false;
   }
-}
+},
 
 
     // ✅ CONFRONTO TRA LOCALITÀ
@@ -91,6 +91,7 @@ export const useSimulationStore = defineStore('simulation', {
     }
   }
 });
+
 
 
 
