@@ -3,12 +3,15 @@
     <button @click="goBack" style="margin-bottom:1rem;">← Nuova simulazione</button>
 
     <!-- ✅ RISULTATO PRINCIPALE -->
-    <div v-if="store.result" style="border:1px solid #ddd; padding:1rem; border-radius:8px; margin-bottom:1rem;">
-      <h2>Risultato Simulazione</h2>
+    <div v-if="simulation.result">
+  <p><strong>Consumo:</strong> {{ simulation.result.estimatedConsumptionKWh }} kWh</p>
+  <p><strong>CO₂:</strong> {{ simulation.result.co2EquivalentKg }} kg</p>
+</div>
 
-      <p><strong>Consumo:</strong> {{ store.result.estimatedConsumptionKWh }} kWh</p>
-      <p><strong>CO₂:</strong> {{ store.result.co2EquivalentKg }} kg</p>
-    </div>
+<div v-else>
+  <p>Nessun risultato disponibile.</p>
+</div>
+
 
     <!-- ✅ CONFRONTO -->
     <div style="border:1px solid #ddd; padding:1rem; border-radius:8px; margin-bottom:1rem;">
@@ -41,7 +44,8 @@
 
       <ul>
         <li v-for="(item, index) in store.history" :key="index">
-          📅 {{ item.date }} — 🔋 {{ item.kwh }} kWh — 🌱 {{ item.co2 }} kg CO₂
+          📅 {{ item.date }} — 🔋 {{ item.kwh }} kWh — {{ item.co2 }} kg CO₂
+
         </li>
       </ul>
     </div>
@@ -71,3 +75,4 @@ export default {
   }
 };
 </script>
+
