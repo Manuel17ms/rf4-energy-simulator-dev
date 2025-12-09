@@ -26,73 +26,76 @@ export const useSimulationStore = defineStore('simulation', {
     error: null
   }),
 
-  actions: {
-    // ✅ CARICAMENTO LOCALITÀ
-      async loadLocations() {
-      this.loading = true;
-      try {
-        const res = await getLocations();
-        this.locations = res.data;
-      } catch (err) {
-        this.error = 'Errore caricamento località';
-      } finally {
-        this.loading = false;
-      }
-    },
-   
+ actions: {
+  // Caricamento località
+  async loadLocations() {
+    this.loading = true;
+    try {
+      const res = await getLocations();
+      this.locations = res.data;
+    } catch (err) {
+      this.error = 'Errore caricamento località';
+    } finally {
+      this.loading = false;
+    }
+  },
 
-    // ✅ INVIO SIMULAZIONE
+  // Invio simulazione
   async submitSimulation() {
-  this.loading = true;
-  this.error = null;
+    this.loading = true;
+    this.error = null;
 
-  try {
-    const res = await postSimulation(this.form);
+    try {
+      const res = await postSimulation(this.form);
 
-    console.log('RISPOSTA API:', res);
+      console.log("RISPOSTA API:", res.data);
 
-    // FIX: estrai correttamente i dati dal backend
-    this.result = res.data.data;
+      // IL BACKEND RISPONDE: { message: "...", data: {...} }
+      this.result = res.data.data;
 
-    // storico corretto
-    const entry = {
-      date: new Date().toLocaleString(),
-      kwh: res.data.data.estimatedConsumptionKWh,
-      co2: res.data.data.co2EquivalentKg
-    };
+      const entry = {
+        date: new Date().toLocaleString(),
+        kwh: res.data.data.estimatedConsumptionKWh,
+        co2: res.data.data.co2EquivalentKg
+      };
 
-    this.history.unshift(entry);
+      this.history.unshift(entry);
 
-    this.compareResult = null;
-  } 
-  catch (err) {
-    this.error = err.message || 'Errore chiamata API';
-  } 
-  finally {
-    this.loading = false;
-  }
-},
+      this.compareResult = null;
+    } 
+    catch (err) {
+      this.error = err.message || "Errore chiamata API";
+    } 
+    finally {
+      this.loading = false;
+    }
+  },
 
+  // Confronto località
+  async compareLocation(locationId) {
+    if (!locationId) return;
 
+    this.loading = true;
+    this.error = null;
 
-    // ✅ CONFRONTO TRA LOCALITÀ
-    async compareLocation(locationId) {
-      if (!locationId) return;
+    try {
+      const res = await getCompare(locationId);
 
-      this.loading = true;
-      this.error = null;
+      console.log("RISPOSTA CONFRONTO:", res.data);
 
-      try {
-        const data = await getCompare(locationId);
-        this.compareResult = data;
-      } catch (err) {
-        this.error = err.message || 'Errore confronto località';
-      } finally {
-        this.loading = false;
-      }
+      // Anche qui il backend manda { message: "...", data: {...} }
+      this.compareResult = res.data.data;
+    } 
+    catch (err) {
+      this.error = err.message || "Errore confronto località";
+    } 
+    finally {
+      this.loading = false;
     }
   }
-});
+}
+
+
 
 
 
