@@ -41,35 +41,37 @@ export const useSimulationStore = defineStore('simulation', {
   },
 
   // Invio simulazione
-  async submitSimulation() {
-    this.loading = true;
-    this.error = null;
+ async submitSimulation() {
+  this.loading = true;
+  this.error = null;
 
-    try {
-      const res = await postSimulation(this.form);
+  try {
+    const res = await postSimulation(this.form);
 
-      console.log("RISPOSTA API:", res.data);
+    console.log("RISPOSTA API:", res.data);
 
-      // IL BACKEND RISPONDE: { message: "...", data: {...} }
-      this.result = res.data.data;
+    // Il backend restituisce direttamente i dati della simulazione
+    this.result = res.data;
 
-      const entry = {
-        date: new Date().toLocaleString(),
-        kwh: res.data.data.estimatedConsumptionKWh,
-        co2: res.data.data.co2EquivalentKg
-      };
+    // storico corretto
+    const entry = {
+      date: new Date().toLocaleString(),
+      kwh: res.data.estimatedConsumptionKWh,
+      co2: res.data.co2EquivalentKg
+    };
 
-      this.history.unshift(entry);
+    this.history.unshift(entry);
 
-      this.compareResult = null;
-    } 
-    catch (err) {
-      this.error = err.message || "Errore chiamata API";
-    } 
-    finally {
-      this.loading = false;
-    }
-  },
+    this.compareResult = null;
+  } 
+  catch (err) {
+    this.error = err.message || "Errore chiamata API";
+  } 
+  finally {
+    this.loading = false;
+  }
+},
+
 
   // Confronto località
   async compareLocation(locationId) {
@@ -95,6 +97,7 @@ export const useSimulationStore = defineStore('simulation', {
   }
 }
 })
+
 
 
 
