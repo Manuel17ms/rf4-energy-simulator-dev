@@ -85,7 +85,6 @@ export const useSimulationStore = defineStore('simulation', {
 
     console.log("RISPOSTA CONFRONTO:", res.data);
 
-    // salva direttamente i dati
     this.compareResult = res.data;
 
   } catch (err) {
@@ -95,8 +94,10 @@ export const useSimulationStore = defineStore('simulation', {
   }
 }
 
+
 }
 })
+
 
 
 
