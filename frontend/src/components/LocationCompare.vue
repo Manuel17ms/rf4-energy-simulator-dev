@@ -6,11 +6,12 @@
       Confronta con questa località
     </button>
 
-    <div v-if="store.compareResult" style="margin-top:1rem;">
-      <p><strong>Consumo medio:</strong> {{ store.compareResult.estimatedConsumptionKWh }} kWh</p>
-      <p><strong>CO₂ medio:</strong> {{ store.compareResult.co2EquivalentKg }} kg</p>
-    </div>
-  </div>
+    <p v-if="store.compareResult">
+  Consumo medio: {{ store.compareResult.avgConsumptionKWh }} kWh  
+  <br>
+  CO₂ media: {{ store.compareResult.avgCo2Kg }} kg
+</p>
+
 </template>
 
 <script>
