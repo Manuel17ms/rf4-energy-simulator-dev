@@ -76,13 +76,9 @@ export const useSimulationStore = defineStore('simulation', {
   // Confronto località
  async compareLocation(locationId) {
   try {
-    const res = await getCompare(locationId);
-    console.log("RISPOSTA CONFRONTO:", res.data);
+    const data = await getCompare(locationId);
+this.compareResult = data;
 
-    this.compareResult = {
-      avgConsumptionKWh: res.data.estimatedConsumptionKWh,
-      avgCo2Kg: res.data.co2EquivalentKg
-    };
   } catch (err) {
     console.error("Errore confronto:", err);
   }
@@ -93,6 +89,7 @@ export const useSimulationStore = defineStore('simulation', {
 
 }
 })
+
 
 
 
