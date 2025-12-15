@@ -68,7 +68,7 @@ router.get('/simulation/compare/:locationId', (req, res) => {
     return res.status(404).json({ message: 'Località non trovata' });
   }
 
-  const baseAverage = 3500;
+  const baseAverage = 350;
 
   const estimatedConsumptionKWh = Math.round(
     baseAverage * location.climateFactor
@@ -85,5 +85,6 @@ router.get('/simulation/compare/:locationId', (req, res) => {
 });
 
 module.exports = router;
+
 
 
