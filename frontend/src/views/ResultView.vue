@@ -51,10 +51,11 @@ const goBack = () => {
         Confronta
       </button>
 
-      <div v-if="compareResult">
-        <p><strong>Consumo medio:</strong> {{ compareResult.averageKWh }} kWh</p>
-        <p><strong>CO₂ media:</strong> {{ compareResult.averageCO2 }} kg</p>
-      </div>
+     <div v-if="compareResult">
+  <p><strong>Consumo medio:</strong> {{ compareResult.estimatedConsumptionKWh }} kWh</p>
+  <p><strong>CO₂ media:</strong> {{ compareResult.co2EquivalentKg }} kg</p>
+</div>
+
     </section>
 
     <!-- 🔹 STORICO SIMULAZIONI -->
@@ -97,4 +98,5 @@ const goBack = () => {
   text-decoration: underline;
 }
 </style>
+
 
