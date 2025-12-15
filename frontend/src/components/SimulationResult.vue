@@ -1,13 +1,17 @@
+
 <template>
   <div v-if="data" style="border:1px solid #ccc; padding:1rem; border-radius:8px;">
     <h2>Risultato simulazione</h2>
 
-    <p><strong>Consumo stimato (kWh):</strong> {{ data.estimatedConsumptionKWh }}</p>
-    <p><strong>Consumo gas (Smc):</strong> {{ data.estimatedGasSmc }}</p>
-    <p><strong>Spesa annua (€):</strong> {{ data.estimatedAnnualCost }}</p>
+    <p>
+      <strong>Consumo stimato:</strong>
+      {{ data.estimatedConsumptionKWh }} kWh
+    </p>
 
-    <h3>Dettaglio:</h3>
-    <pre>{{ data }}</pre>
+    <p>
+      <strong>CO₂ equivalente:</strong>
+      {{ data.co2EquivalentKg }} kg
+    </p>
   </div>
 
   <div v-else>
@@ -15,17 +19,5 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'SimulationResult',
-  props: {
-    data: {
-      type: Object,
-      required: false,
-      default: null
-    }
-  }
-};
-</script>
 
 
