@@ -24,8 +24,10 @@ export default {
     const store = useSimulationStore();
 
     function compare() {
-      store.compareLocation(store.form.locationId);
-    }
+  console.log('CLICK CONFRONTA → locationId:', store.form.locationId);
+  store.compareLocation(store.form.locationId);
+}
+
 
     return { store, compare };
   }
