@@ -17,8 +17,9 @@ export function getLocations() {
 
 // Confronto
 export function getCompare(locationId) {
-  return API.get(`/simulation/compare/${locationId}`).then(res => res.data);
+  return API.get(`/simulation/compare/${locationId}`);
 }
+
 
 
 
