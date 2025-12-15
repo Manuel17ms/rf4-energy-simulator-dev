@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 
@@ -13,10 +12,13 @@ const localita = [
   { id: 'loc8', name: 'San Giuseppe', climateFactor: 1.0 }
 ];
 
-// Risponde sia a /locations sia a /localita — utile se il router viene montato su /api
+// API
 router.get(['/locations', '/localita', '/'], (req, res) => {
-  // se vuoi puoi mappare o normalizzare i campi qui; ora restituiamo già oggetti corretti
   res.json(localita);
 });
 
-module.exports = router;
+// 🔹 EXPORT DATI PER ALTRI ROUTER
+module.exports = {
+  router,
+  localita
+};
