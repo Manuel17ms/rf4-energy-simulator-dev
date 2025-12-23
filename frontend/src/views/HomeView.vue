@@ -79,11 +79,11 @@ const submit = async () => {
         <select v-model="simulation.form.locationId">
   <option disabled value="">-- Select --</option>
 
-  <option
+  <option>
     v-for="loc in simulation.locations"
     :key="loc.id"
     :value="loc.id"
-  >
+  
     {{ loc.name }}
   </option>
 </select>
@@ -94,6 +94,7 @@ const submit = async () => {
       </button>
     </div>
   </div>
+     </div>
 </template>
 
 <style scoped>
@@ -170,6 +171,7 @@ select {
   color: #2f7c1d;
 }
 </style>
+
 
 
 
