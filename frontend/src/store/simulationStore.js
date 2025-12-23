@@ -90,7 +90,12 @@ export const useSimulationStore = defineStore('simulation', {
 
 
 }
+ runSimulation() {
+  return this.submitSimulation();
+}
+ 
 })
+
 
 
 
