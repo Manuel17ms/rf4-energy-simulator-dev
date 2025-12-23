@@ -1,23 +1,20 @@
-
-
 <script setup>
-import { onMounted } from 'vue';
-import { useSimulationStore } from '../store/simulationStore';
-import { useRouter } from 'vue-router';
+import { onMounted } from 'vue'
+import { useSimulationStore } from '../store/simulationStore'
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
-const simulation = useSimulationStore();
+const router = useRouter()
+const simulation = useSimulationStore()
 
 onMounted(() => {
-  simulation.loadLocations();
-});
+  simulation.loadLocations()
+})
 
 const submit = async () => {
-  await simulation.submitSimulation();
-  router.push('/result');
-};
+  await simulation.submitSimulation()
+  router.push('/result')
+}
 </script>
-
 
 <template>
   <div class="page">
@@ -34,12 +31,12 @@ const submit = async () => {
 
       <div class="row">
         <label>Square footage (m²)</label>
-        <input type="number" v-model="form.squareMeters" />
+        <input type="number" v-model="simulation.form.squareMeters" />
       </div>
 
       <div class="row">
         <label>Type of dwelling</label>
-        <select v-model="form.housingType">
+        <select v-model="simulation.form.housingType">
           <option value="apartment">Apartment</option>
           <option value="house">House</option>
         </select>
@@ -47,12 +44,12 @@ const submit = async () => {
 
       <div class="row">
         <label>Number of residents</label>
-        <input type="number" v-model="form.residents" />
+        <input type="number" v-model="simulation.form.residents" />
       </div>
 
       <div class="row">
         <label>Energy for water</label>
-        <select v-model="form.energy.water">
+        <select v-model="simulation.form.energy.water">
           <option value="electricity">Electricity</option>
           <option value="gas">Gas</option>
         </select>
@@ -60,7 +57,7 @@ const submit = async () => {
 
       <div class="row">
         <label>Heating</label>
-        <select v-model="form.energy.heating">
+        <select v-model="simulation.form.energy.heating">
           <option value="electricity">Electricity</option>
           <option value="gas">Gas</option>
         </select>
@@ -68,7 +65,7 @@ const submit = async () => {
 
       <div class="row">
         <label>Kitchen</label>
-        <select v-model="form.energy.kitchen">
+        <select v-model="simulation.form.energy.kitchen">
           <option value="electricity">Electricity</option>
           <option value="gas">Gas</option>
         </select>
@@ -77,24 +74,22 @@ const submit = async () => {
       <div class="row">
         <label>Neighborhood</label>
         <select v-model="simulation.form.locationId">
-  <option disabled value="">-- Select --</option>
-
-  <option>
-    v-for="loc in simulation.locations"
-    :key="loc.id"
-    :value="loc.id"
-  
-    {{ loc.name }}
-  </option>
-</select>
-
+          <option disabled value="">-- Select --</option>
+          <option
+            v-for="loc in simulation.locations"
+            :key="loc.id"
+            :value="loc.id"
+          >
+            {{ loc.name }}
+          </option>
+        </select>
+      </div>
 
       <button class="submit" @click="submit">
         Calculate simulation
       </button>
     </div>
   </div>
-     </div>
 </template>
 
 <style scoped>
@@ -171,6 +166,10 @@ select {
   color: #2f7c1d;
 }
 </style>
+
+
+
+
 
 
 
