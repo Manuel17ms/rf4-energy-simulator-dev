@@ -82,7 +82,7 @@ export const useSimulationStore = defineStore('simulation', {
   } catch (err) {
     console.error("Errore confronto:", err);
   }
-}
+},
 
 
 
@@ -95,6 +95,7 @@ runSimulation() {
  
  
 })
+
 
 
 
