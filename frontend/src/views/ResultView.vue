@@ -3,6 +3,10 @@ import { useSimulationStore } from '../store/simulationStore';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 
+onMounted(() => {
+  simulation.loadHistory();
+});
+  
 const router = useRouter();
 const simulation = useSimulationStore();
 
@@ -98,5 +102,6 @@ const goBack = () => {
   text-decoration: underline;
 }
 </style>
+
 
 
