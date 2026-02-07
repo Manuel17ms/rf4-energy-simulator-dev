@@ -89,7 +89,7 @@ sessionId: this.sessionId
 
 async loadHistory() {
   try {
-    const data = await getHistory();
+    const data = await getHistory(this.sessionId);
 
     this.history = data.map(sim => ({
       date: new Date(sim.createdAt).toLocaleString(),
@@ -111,6 +111,7 @@ runSimulation() {
  
  
 })
+
 
 
 
