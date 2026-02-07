@@ -105,8 +105,10 @@ router.get('/simulation/compare/:locationId', async (req, res) => {
 
 router.get('/simulation/history', async (req, res) => {
   try {
+    const { sessionId } = req.params;
+    
     const simulations = await Simulation
-      .find()
+      .find({ sessionId })
       .sort({ createdAt: -1 });
 
     res.json(simulations);
@@ -117,6 +119,7 @@ router.get('/simulation/history', async (req, res) => {
 
 
 module.exports = router;
+
 
 
 
