@@ -94,40 +94,55 @@ const submit = async () => {
 
 <style scoped>
 .page {
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
   background: #3a9d23;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: Arial, sans-serif;
+
   position: relative;
+  overflow: hidden;
 }
+
 
 .logo {
   position: absolute;
   top: 20px;
   left: 20px;
+
   background: #eaffd8;
-  padding: 20px;
-  border-radius: 50%;
+  padding: 15px 25px;
+  border-radius: 40px;
+
   font-weight: bold;
   color: #2f7c1d;
 }
+
 
 .back {
   position: absolute;
   top: 30px;
   right: 30px;
-  font-size: 32px;
+
+  font-size: 28px;
   color: #eaffd8;
   cursor: pointer;
 }
 
 .card {
-  background: transparent;
   width: 420px;
+  padding: 40px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.4);
+
+  background: rgba(0,0,0,0.05);
+  backdrop-filter: blur(4px);
+
   color: #eaffd8;
 }
+
 
 h1 {
   text-align: center;
@@ -166,6 +181,7 @@ select {
   color: #2f7c1d;
 }
 </style>
+
 
 
 
