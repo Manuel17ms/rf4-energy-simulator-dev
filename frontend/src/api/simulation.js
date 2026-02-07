@@ -22,8 +22,9 @@ export function getCompare(locationId) {
 
 
 export function getHistory() {
-  return API.get('/simulation/history').then(res => res.data);
+  return API.get('/simulation/history/${sessionId}').then(res => res.data);
 }
+
 
 
 
