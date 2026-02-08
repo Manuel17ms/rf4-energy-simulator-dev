@@ -1,11 +1,10 @@
-
 <script setup>
 import { useSimulationStore } from '../store/simulationStore';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
+
 import SimulationChart from '../components/SimulationChart.vue';
 import HistoryChart from '../components/HistoryChart.vue';
-
 
 const router = useRouter();
 const simulation = useSimulationStore();
@@ -23,7 +22,7 @@ const goBack = () => {
     <!-- LOGO -->
     <div class="logo">TnEnergy</div>
 
-    <!-- BACK -->
+    <!-- BACK BUTTON -->
     <div class="back" @click="goBack">←</div>
 
     <!-- CARD -->
@@ -37,14 +36,22 @@ const goBack = () => {
         <p><strong>CO₂:</strong> {{ result.co2EquivalentKg }} kg</p>
       </div>
 
+      <div v-else>
+        <p>No simulation result available.</p>
+      </div>
+
       <!-- COMPARE -->
-      <div class="section">
+      <div v-if="result" class="section">
 
         <label>Neighborhood</label>
 
         <select v-model="simulation.form.locationId">
           <option disabled value="">-- Select --</option>
-          <option v-for="loc in locations" :key="loc.id" :value="loc.id">
+          <option
+            v-for="loc in locations"
+            :key="loc.id"
+            :value="loc.id"
+          >
             {{ loc.name }}
           </option>
         </select>
@@ -57,31 +64,43 @@ const goBack = () => {
         </button>
 
         <div v-if="compareResult" class="compareBox">
-          <p><strong>Average consumption:</strong> {{ compareResult.estimatedConsumptionKWh }} kWh</p>
-          <p><strong>Average CO₂:</strong> {{ compareResult.co2EquivalentKg }} kg</p>
+          <p>
+            <strong>Average consumption:</strong>
+            {{ compareResult.estimatedConsumptionKWh }} kWh
+          </p>
+
+          <p>
+            <strong>Average CO₂:</strong>
+            {{ compareResult.co2EquivalentKg }} kg
+          </p>
+        </div>
+
+        <!-- CHART CONFRONTO -->
+        <div class="chartBox" v-if="compareResult && result">
+          <SimulationChart
+            :userValue="result.estimatedConsumptionKWh"
+            :compareValue="compareResult.estimatedConsumptionKWh"
+          />
         </div>
 
       </div>
-    <SimulationChart
-      v-if="compareResult && result"
-      :userValue="result.estimatedConsumptionKWh"
-      :compareValue="compareResult.estimatedConsumptionKWh"
-    />
 
       <!-- HISTORY -->
       <div class="section">
+
         <h3>Simulation history</h3>
 
         <ul>
           <li v-for="(item, index) in history" :key="index">
             📅 {{ item.date }} — 🔋 {{ item.kwh }} kWh — 🌱 {{ item.co2 }} kg CO₂
           </li>
-          <HistoryChart
-            v-if="history.length"
-            :history="history"
-          />
-
         </ul>
+
+        <!-- CHART STORICO -->
+        <div class="chartBox" v-if="history.length > 1">
+          <HistoryChart :history="history" />
+        </div>
+
       </div>
 
     </div>
@@ -111,7 +130,7 @@ const goBack = () => {
   color: #2f7c1d;
 }
 
-/* BACK */
+/* BACK BUTTON */
 .back {
   position: absolute;
   top: 30px;
@@ -123,7 +142,8 @@ const goBack = () => {
 
 /* CARD */
 .card {
-  width: 420px;
+  width: 600px;
+  max-width: 90vw;
   color: #eaffd8;
 }
 
@@ -132,12 +152,7 @@ const goBack = () => {
   margin-top: 20px;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-/* INPUT */
+/* SELECT */
 select {
   width: 100%;
   padding: 8px;
@@ -159,11 +174,17 @@ select {
   color: #2f7c1d;
 }
 
+/* COMPARE BOX */
 .compareBox {
   margin-top: 15px;
   padding: 10px;
   border: 1px solid #eaffd8;
   border-radius: 6px;
+}
+
+/* CHART BOX */
+.chartBox {
+  margin-top: 20px;
 }
 
 ul {
