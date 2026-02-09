@@ -19,59 +19,44 @@ const submit = async () => {
 <template>
   <div class="page">
 
-    <!-- LOGO -->
     <div class="logo">TnEnergy</div>
 
-    <!-- BACK -->
-    <div class="back" @click="router.push('/')">←</div>
-
-    <!-- FORM -->
     <div class="card">
+
       <h1>Simulator</h1>
 
-      <div class="row">
+      <form @submit.prevent="simulation.submitSimulation">
+
         <label>Square footage (m²)</label>
         <input type="number" v-model="simulation.form.squareMeters" />
-      </div>
 
-      <div class="row">
         <label>Type of dwelling</label>
         <select v-model="simulation.form.housingType">
           <option value="apartment">Apartment</option>
           <option value="house">House</option>
         </select>
-      </div>
 
-      <div class="row">
         <label>Number of residents</label>
         <input type="number" v-model="simulation.form.residents" />
-      </div>
 
-      <div class="row">
         <label>Energy for water</label>
         <select v-model="simulation.form.energy.water">
           <option value="electricity">Electricity</option>
           <option value="gas">Gas</option>
         </select>
-      </div>
 
-      <div class="row">
         <label>Heating</label>
         <select v-model="simulation.form.energy.heating">
           <option value="electricity">Electricity</option>
           <option value="gas">Gas</option>
         </select>
-      </div>
 
-      <div class="row">
         <label>Kitchen</label>
-        <select v-model="simulation.form.energy.kitchen">
+        <select v-model="simulation.form.energy.cooking">
           <option value="electricity">Electricity</option>
           <option value="gas">Gas</option>
         </select>
-      </div>
 
-      <div class="row">
         <label>Neighborhood</label>
         <select v-model="simulation.form.locationId">
           <option disabled value="">-- Select --</option>
@@ -83,104 +68,92 @@ const submit = async () => {
             {{ loc.name }}
           </option>
         </select>
-      </div>
 
-      <button class="submit" @click="submit">
-        Calculate simulation
-      </button>
+        <button type="submit">Calculate simulation</button>
+
+      </form>
     </div>
   </div>
 </template>
 
+
 <style scoped>
 .page {
-  width: 100vw;
-  height: 100vh;
-  background: #3a9d23;
-
+  min-height: 100vh;
+  background: #2f6f2f;
   display: flex;
-  align-items: center;
   justify-content: center;
-
+  align-items: center;
+  font-family: Arial, sans-serif;
   position: relative;
-  overflow: hidden;
 }
 
-
+/* LOGO */
 .logo {
   position: absolute;
-  top: 20px;
-  left: 20px;
-
-  background: #eaffd8;
-  padding: 15px 25px;
-  border-radius: 40px;
-
-  font-weight: bold;
-  color: #2f7c1d;
-}
-
-
-.back {
-  position: absolute;
   top: 30px;
-  right: 30px;
-
-  font-size: 28px;
-  color: #eaffd8;
-  cursor: pointer;
+  left: 30px;
+  background: #e7f6e7;
+  padding: 22px;
+  border-radius: 50%;
+  font-weight: bold;
+  color: #2f6f2f;
 }
 
+/* CARD */
 .card {
-  width: 420px;
-  padding: 40px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.4);
-
-  background: rgba(0,0,0,0.05);
-  backdrop-filter: blur(4px);
-
-  color: #eaffd8;
+  width: 520px;
+  padding: 35px;
+  border-radius: 14px;
+  background: #3f8c3f;
+  color: #f4fff4;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
 }
 
-
-h1 {
+.card h1 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
-.row {
+/* FORM */
+form {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
+  flex-direction: column;
+  gap: 14px;
 }
 
 label {
   font-size: 14px;
 }
 
+/* INPUT */
 input,
 select {
-  width: 160px;
-  padding: 6px;
-  border-radius: 4px;
+  padding: 10px;
+  border-radius: 6px;
   border: none;
-  background: #eaffd8;
+  background: #e7f6e7;
 }
 
-.submit {
-  width: 100%;
+/* BUTTON */
+button {
   margin-top: 20px;
-  padding: 10px;
-  background: #eaffd8;
+  padding: 12px;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 6px;
+  background: #e7f6e7;
+  color: #2f6f2f;
   font-weight: bold;
-  color: #2f7c1d;
+  cursor: pointer;
+  transition: 0.2s;
 }
+
+button:hover {
+  transform: scale(1.02);
+}
+
 </style>
+
 
 
 
