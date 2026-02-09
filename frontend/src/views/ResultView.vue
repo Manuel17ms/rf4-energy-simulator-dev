@@ -100,10 +100,9 @@ const goBack = () => router.push('/');
 
 <style scoped>
 
-/* PAGE */
 .page {
   min-height: 100vh;
-  background: #3a9d23;
+  background: #2f6f2f;
   padding: 40px;
   font-family: Arial, sans-serif;
   position: relative;
@@ -112,7 +111,7 @@ const goBack = () => router.push('/');
 /* DASHBOARD GRID */
 .dashboard {
   display: grid;
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: 460px 1fr;
   gap: 40px;
   max-width: 1400px;
   margin: auto;
@@ -120,7 +119,7 @@ const goBack = () => router.push('/');
 
 /* LEFT PANEL */
 .left {
-  color: #eaffd8;
+  color: #f4fff4;
 }
 
 /* RIGHT PANEL */
@@ -132,45 +131,40 @@ const goBack = () => router.push('/');
 
 /* BOX DATI */
 .box {
-  border: 1px solid #eaffd8;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 24px;
 }
 
 /* CHART CARD */
 .chartCard {
-  background: rgba(255,255,255,0.05);
-  padding: 20px;
-  border-radius: 12px;
+  background: rgba(255,255,255,0.08);
+  padding: 24px;
+  border-radius: 14px;
 }
 
 /* SELECT */
 select {
   width: 100%;
-  padding: 8px;
-  border-radius: 4px;
+  padding: 10px;
+  border-radius: 6px;
   border: none;
-  background: #eaffd8;
-  margin-top: 5px;
-  margin-bottom: 10px;
+  background: #e7f6e7;
+  margin-top: 6px;
+  margin-bottom: 12px;
 }
 
 /* BUTTON */
 .secondary {
   width: 100%;
-  padding: 10px;
-  background: #eaffd8;
+  padding: 12px;
+  background: #e7f6e7;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  color: #2f7c1d;
-}
-
-/* COMPARE BOX */
-.compareBox {
-  margin-top: 15px;
+  color: #2f6f2f;
 }
 
 /* LOGO */
@@ -178,11 +172,11 @@ select {
   position: absolute;
   top: 20px;
   left: 20px;
-  background: #eaffd8;
+  background: #e7f6e7;
   padding: 20px;
   border-radius: 50%;
   font-weight: bold;
-  color: #2f7c1d;
+  color: #2f6f2f;
 }
 
 /* BACK */
@@ -191,14 +185,16 @@ select {
   top: 30px;
   right: 30px;
   font-size: 32px;
-  color: #eaffd8;
+  color: #e7f6e7;
   cursor: pointer;
 }
 
 ul {
   padding-left: 20px;
 }
+
 </style>
+
 
 
 
