@@ -78,81 +78,100 @@ const submit = async () => {
 
 
 <style scoped>
-.page {
-  min-height: 100vh;
-  background: #2f6f2f;
+  .page {
+  width: 100vw;
+  height: 100vh;
+  background: #2f6f2f;  
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-family: Arial, sans-serif;
+  justify-content: center;
   position: relative;
+  overflow: hidden;
 }
 
-/* LOGO */
+
 .logo {
   position: absolute;
-  top: 30px;
-  left: 30px;
+  top: 20px;
+  left: 20px;
   background: #e7f6e7;
-  padding: 22px;
-  border-radius: 50%;
+  padding: 18px 28px;
+  border-radius: 40px;
   font-weight: bold;
   color: #2f6f2f;
 }
 
-/* CARD */
+.back {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 28px;
+  color: #e7f6e7;
+  cursor: pointer;
+}
+
+
 .card {
-  width: 520px;
-  padding: 35px;
-  border-radius: 14px;
-  background: #3f8c3f;
+  width: 520px;             
+  padding: 50px;
+  border-radius: 18px;
+
+  border: 1px solid rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(6px);
+
   color: #f4fff4;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
 }
 
-.card h1 {
+
+h1 {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
 }
 
-/* FORM */
-form {
+.row {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
 }
 
 label {
-  font-size: 14px;
+  font-size: 15px;
 }
 
-/* INPUT */
 input,
 select {
-  padding: 10px;
+  width: 190px;      
+  padding: 8px;
   border-radius: 6px;
   border: none;
   background: #e7f6e7;
 }
 
-/* BUTTON */
-button {
-  margin-top: 20px;
-  padding: 12px;
+.submit {
+  width: 100%;
+  margin-top: 28px;
+  padding: 14px;
+
+  background: #e7f6e7;
   border: none;
   border-radius: 6px;
-  background: #e7f6e7;
-  color: #2f6f2f;
-  font-weight: bold;
+
   cursor: pointer;
-  transition: 0.2s;
+  font-weight: bold;
+  color: #2f6f2f;
+
+  transition: 0.2s ease;
 }
 
-button:hover {
-  transform: scale(1.02);
+.submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 </style>
+
 
 
 
