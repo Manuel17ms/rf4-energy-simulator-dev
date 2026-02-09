@@ -40,6 +40,7 @@ const chartOptions = {
   responsive: true,
   plugins: {
     legend: {
+      display: false
       labels: {
         color: '#eaffd8'
       }
