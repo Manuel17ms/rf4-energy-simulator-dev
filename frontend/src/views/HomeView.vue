@@ -148,12 +148,10 @@ select {
   transition: 0.2s;
 }
 
-submit:hover {
-  transform: scale(1.02);
-}
 
 
 </style>
+
 
 
 
