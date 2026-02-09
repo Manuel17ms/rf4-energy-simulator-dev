@@ -20,10 +20,18 @@ const chartData = ref({
   labels: ['Your home', 'Neighborhood average'],
   datasets: [
     {
-      data: [props.userValue, props.compareValue]
+      data: [props.userValue, props.compareValue],
+
+      backgroundColor: [
+        '#e7f6e7',  
+        '#cde9cd'    
+      ],
+
+      borderWidth: 0
     }
   ]
 })
+
 
 watch(
   () => [props.userValue, props.compareValue],
@@ -32,10 +40,11 @@ watch(
   }
 )
 
+
 const chartOptions = {
   responsive: true,
   plugins: {
-    legend: { display: true }
+    legend: { display: false }
   }
 }
 </script>
