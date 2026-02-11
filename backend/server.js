@@ -1,38 +1,44 @@
-const express = require('express');
-const cors = require('cors');
-const { connectDB } = require('./config/db');
-const simulationRoutes = require('./routes/simulation.routes');
-require('dotenv').config();
 
-const app = express();
+import express from 'express'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import { connectDB } from './config/db.js'
 
-// Abilita CORS solo per il frontend
-app.use(cors({
-  origin: ['http://localhost:5173', 'http://172.30.133.154:5173']
-}));
+import simulationRoutes from './routes/simulation.routes.js'
+import localitaRoutes from './routes/localita.js'
 
-app.use(express.json());
+dotenv.config()
 
-// Connect DB
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/rf4db';
+const app = express()
+
+app.use(cors())
+app.use(express.json())
+
+// ROUTES
+app.use('/api', simulationRoutes)
+app.use('/api', localitaRoutes)
+
+// ROOT
+app.get('/', (req, res) => {
+  res.json({ message: 'RF4 Simulation Backend' })
+})
+
+// CONNECT DB
+const uri = process.env.MONGODB_URI
 connectDB(uri)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error', err));
 
+// ⭐ esporta app per Jest
+export default app
 
-// Rotte esistenti
-app.use('/api', simulationRoutes);
-const localitaRoutes = require('./routes/localita');
-app.use('/api', localitaRoutes.router);
+// ⭐ avvia server SOLO se eseguito direttamente
+if (process.env.NODE_ENV !== 'test') {
 
+  const PORT = process.env.PORT || 4000
 
-
-// Root
-app.get('/', (req, res) => res.json({ message: 'RF4 Simulation Backend' }));
-
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, '0.0.0.0', () => console.log(`Server listening on port ${PORT}`));
-
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+  })
+}
 
 
 
