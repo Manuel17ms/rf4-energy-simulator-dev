@@ -1,28 +1,20 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
-const SimulationSchema = new mongoose.Schema({
-  sessionId: String,
+const simulationSchema = new mongoose.Schema({
+
   squareMeters: Number,
   housingType: String,
   residents: Number,
-
-  energy: {
-    water: String,
-    heating: String,
-    cooking: String
-  },
-
+  energy: Object,
   locationId: String,
 
   estimatedConsumptionKWh: Number,
   co2EquivalentKg: Number,
 
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
-});
+  sessionId: String
 
-module.exports = mongoose.model('Simulation', SimulationSchema);
+}, { timestamps: true })
+
+export default mongoose.model('Simulation', simulationSchema)
 
 
