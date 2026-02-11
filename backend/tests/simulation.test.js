@@ -17,8 +17,6 @@ afterAll(async () => {
 
 describe('POST /simulation', () => {
 
-  jest.setTimeout(10000)
-
   test('Should create simulation', async () => {
 
     const res = await request(app)
