@@ -2,24 +2,33 @@ name: Backend Tests
 
 on:
   push:
-    branches: ["main", "master", "develop"]
+    branches: ["main", "develop"]
   pull_request:
-    branches: ["main", "master", "develop"]
+    branches: ["main", "develop"]
 
 jobs:
   test-backend:
     runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.runCommand({ ping: 1 })'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
 
     defaults:
       run:
         working-directory: backend
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
@@ -31,6 +40,8 @@ jobs:
       - name: Run tests
         env:
           NODE_ENV: test
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          # DB locale nel runner GitHub
+          MONGODB_URI: mongodb://127.0.0.1:27017/rf4_test
         run: npm test -- --runInBand --detectOpenHandles
+
 
