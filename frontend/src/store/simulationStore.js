@@ -1,19 +1,13 @@
-
 import { defineStore } from 'pinia';
 import { postSimulation, getLocations, getCompare, getHistory } from '../api/simulation';
 
-
-// ✅ genera sessionId una sola volta
 let sessionId = sessionStorage.getItem('sessionId');
-
 if (!sessionId) {
   sessionId = crypto.randomUUID();
   sessionStorage.setItem('sessionId', sessionId);
 }
 
-
 export const useSimulationStore = defineStore('simulation', {
-
   state: () => ({
     sessionId,
 
@@ -37,18 +31,13 @@ export const useSimulationStore = defineStore('simulation', {
     error: null
   }),
 
-
   actions: {
-
-    // =========================
-    // Carica località
-    // =========================
+    
     async loadLocations() {
       this.loading = true;
-
       try {
-        const res = await getLocations();
-        this.locations = res.data;
+        const res = await getLocations();   
+        this.locations = res.data;      
       } catch {
         this.error = 'Errore caricamento località';
       } finally {
@@ -56,95 +45,76 @@ export const useSimulationStore = defineStore('simulation', {
       }
     },
 
-
-    // =========================
-    // Invia simulazione
-    // =========================
+    
     async submitSimulation() {
-
       this.loading = true;
       this.error = null;
 
       try {
-
-        const res = await postSimulation({
+        
+        const sim = await postSimulation({
           ...this.form,
           sessionId: this.sessionId
         });
 
-        console.log("RISPOSTA API:", res.data);
+        console.log("RISPOSTA API:", sim);
 
-        this.result = res.data;
+        this.result = sim;
 
-        // aggiorna storico locale
+        
         this.history.unshift({
-          date: new Date().toLocaleString(),
-          kwh: res.data.estimatedConsumptionKWh,
-          co2: res.data.co2EquivalentKg
+          date: new Date(sim.createdAt || Date.now()).toLocaleString(),
+          kwh: sim.estimatedConsumptionKWh,
+          co2: sim.co2EquivalentKg
         });
 
         this.compareResult = null;
-
       } catch (err) {
         this.error = err.message || "Errore chiamata API";
-      }
-      finally {
+      } finally {
         this.loading = false;
       }
     },
-
 
     // =========================
     // Confronto località
     // =========================
     async compareLocation(locationId) {
-
       try {
-        const res = await getCompare(locationId);
-        this.compareResult = res.data;
-      }
-      catch (err) {
+        
+        const compare = await getCompare(locationId);
+        this.compareResult = compare;
+      } catch (err) {
         console.error("Errore confronto:", err);
       }
     },
-
 
     // =========================
     // Carica storico Mongo
     // =========================
     async loadHistory() {
-
       try {
+        
+        const sims = await getHistory(this.sessionId);
 
-        const data = await getHistory(this.sessionId);
+        // Ordina dal più recente (se non lo fai già nel backend)
+        const sorted = [...sims].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-        this.history = data.map(sim => ({
+        this.history = sorted.map(sim => ({
           date: new Date(sim.createdAt).toLocaleString(),
           kwh: sim.estimatedConsumptionKWh,
           co2: sim.co2EquivalentKg
         }));
-
-      }
-      catch (err) {
+      } catch (err) {
         console.error("Errore storico:", err);
       }
     },
 
-
-    // alias compatibilità
     runSimulation() {
       return this.submitSimulation();
     }
-
   }
-
 });
-
-
-
-
-
-
 
 
 
