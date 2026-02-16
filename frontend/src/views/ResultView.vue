@@ -100,13 +100,15 @@ const goBack = () => router.push('/');
 
 <style scoped>
 
-.page {
+.page{
   min-height: 100vh;
-  background: #2f6f2f;
+  background:#2f6f2f;
   padding: 24px;
+  padding-top: 90px;   
   font-family: Arial, sans-serif;
   position: relative;
 }
+
 
 /* DASHBOARD GRID */
 .dashboard {
@@ -224,6 +226,7 @@ ul {
 }
 
 </style>
+
 
 
 
