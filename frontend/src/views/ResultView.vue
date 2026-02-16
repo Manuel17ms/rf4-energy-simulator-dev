@@ -103,18 +103,20 @@ const goBack = () => router.push('/');
 .page {
   min-height: 100vh;
   background: #2f6f2f;
-  padding: 40px;
+  padding: 24px;
   font-family: Arial, sans-serif;
   position: relative;
 }
 
 /* DASHBOARD GRID */
 .dashboard {
+  max-width: 1280px;
+  margin: 0 auto;
+
   display: grid;
-  grid-template-columns: 460px 1fr;
-  gap: 40px;
-  max-width: 1400px;
-  margin: auto;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  align-items: start;
 }
 
 /* LEFT PANEL */
@@ -122,26 +124,32 @@ const goBack = () => router.push('/');
   color: #f4fff4;
 }
 
+.left h1 {
+  font-size: 34px;
+  margin: 0 0 16px;
+}
+
 /* RIGHT PANEL */
 .right {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 24px;
 }
 
 /* BOX DATI */
 .box {
   background: rgba(255,255,255,0.06);
   border-radius: 12px;
-  padding: 22px;
-  margin-bottom: 24px;
+  padding: 16px;
+  margin-bottom: 18px;
 }
 
 /* CHART CARD */
 .chartCard {
   background: rgba(255,255,255,0.08);
-  padding: 24px;
+  padding: 16px;
   border-radius: 14px;
+  min-height: 260px; /* aiuta a non “impazzire” su deploy */
 }
 
 /* SELECT */
@@ -170,11 +178,11 @@ select {
 /* LOGO */
 .logo {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 18px;
+  left: 18px;
   background: #e7f6e7;
-  padding: 20px;
-  border-radius: 50%;
+  padding: 14px 20px;
+  border-radius: 40px; /* meno “pallone” */
   font-weight: bold;
   color: #2f6f2f;
 }
@@ -182,18 +190,41 @@ select {
 /* BACK */
 .back {
   position: absolute;
-  top: 30px;
-  right: 30px;
-  font-size: 32px;
+  top: 18px;
+  right: 18px;
+  font-size: 28px;
   color: #e7f6e7;
   cursor: pointer;
 }
 
 ul {
-  padding-left: 20px;
+  padding-left: 18px;
+  margin: 0;
+}
+
+
+@media (max-width: 1100px) {
+  .page {
+    padding: 16px;
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .logo {
+    top: 12px;
+    left: 12px;
+  }
+
+  .back {
+    top: 12px;
+    right: 12px;
+  }
 }
 
 </style>
+
 
 
 
