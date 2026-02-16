@@ -23,7 +23,8 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.get('/health', (req, res) => res.json({ ok: true }));
+app.get('/health', (req, res) => res.json({ ok: true }))
+app.get('/api/health', (req, res) => res.json({ ok: true }))
 app.use('/api', simulationRoutes)
 app.use('/api', localitaRoutes)
 
@@ -44,6 +45,7 @@ if (process.env.NODE_ENV !== 'test') {
   })
 
 }
+
 
 
 
