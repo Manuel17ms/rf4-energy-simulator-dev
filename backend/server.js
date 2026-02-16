@@ -8,11 +8,13 @@ import simulationRoutes from './routes/simulation.routes.js'
 import localitaRoutes from './routes/localita.js'
 
 
-dotenv.config({
-  path: process.env.NODE_ENV === 'test'
-    ? '.env'
-    : '.env.example'
-})
+import dotenv from 'dotenv';
+
+
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config(); 
+}
+
 
 
 const app = express()
@@ -40,6 +42,7 @@ if (process.env.NODE_ENV !== 'test') {
   })
 
 }
+
 
 
 
