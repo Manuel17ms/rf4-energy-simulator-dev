@@ -5,6 +5,12 @@ const API = axios.create({
   headers: { 'Content-Type': 'application/json' }
 });
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+  if (token) config.headers.Authorization = `Bearer ${token}`
+  return config
+})
+
 // Simulazione
 export function postSimulation(data) {
   return API.post('/simulation', data).then(res => res.data);
@@ -25,6 +31,7 @@ export function getCompare(locationId) {
 export function getHistory() {
   return API.get('/simulation/history/${sessionId}').then(res => res.data);
 }
+
 
 
 
