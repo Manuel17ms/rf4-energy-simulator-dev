@@ -1,16 +1,15 @@
-import jwt from 'jsonwebtoken';
 
-export function authRequired(req, res, next) {
-  const header = req.headers.authorization || '';
-  const token = header.startsWith('Bearer ') ? header.slice(7) : null;
+import jwt from 'jsonwebtoken'
 
-  if (!token) return res.status(401).json({ error: 'Missing token' });
+export function requireAuth(req, res, next) {
+  const header = req.headers.authorization || ''
+  const token = header.startsWith('Bearer ') ? header.slice(7) : null
+  if (!token) return res.status(401).json({ error: 'Token mancante' })
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = payload; // { sub, email }
-    next();
+    req.user = jwt.verify(token, process.env.JWT_SECRET)
+    next()
   } catch {
-    return res.status(401).json({ error: 'Invalid token' });
+    return res.status(401).json({ error: 'Token non valido' })
   }
 }
