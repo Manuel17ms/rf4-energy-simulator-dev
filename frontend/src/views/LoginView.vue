@@ -12,8 +12,9 @@ const remember = ref(false);
 
 const submit = async () => {
   await auth.login(email.value, password.value);
-  if (auth.token) router.push('/'); // o /result
+  if (auth.token) router.push('/home'); // ✅ invece di '/'
 };
+
 
 const googleLogin = () => {
   // TODO: OAuth (per ora placeholder)
